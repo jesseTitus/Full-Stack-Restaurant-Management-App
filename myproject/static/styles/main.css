@@ -1,0 +1,18 @@
+.image-container {
+    text-align: center;  
+}
+
+.fixed-size-image {
+    width: 150px;  
+    height: 150px;  
+    object-fit: cover;  
+    transition: transform 0.3s;  
+}
+
+.image-container a {
+    text-decoration: none;  
+}
+
+.fixed-size-image:hover {
+    transform: scale(1.1); 
+}

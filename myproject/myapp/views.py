@@ -8,7 +8,8 @@ from myapp.models import Logger
 
 # (FUNCTION-BASED)
 def home(request):
-    return HttpResponse("Welcome to Little Lemon !")
+    # form = ApplicationForm() 
+        return render(request, 'welcome.html')#, {'form': form}) 
 
 def about(request):
     return HttpResponse("About us")

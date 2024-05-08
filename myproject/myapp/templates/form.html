@@ -1,0 +1,10 @@
+<html>
+<body>
+    <p>hello</p>
+    <form action="{% url 'modelform' %}" method="POST" style="background-color: aqua;">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+<html>

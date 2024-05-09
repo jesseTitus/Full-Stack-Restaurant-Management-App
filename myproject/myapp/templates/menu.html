@@ -1,0 +1,18 @@
+<!-- menu.html -->
+{% extends 'base.html' %}  <!-- Extend from base template -->
+
+{% block title %}Menu{% endblock %}  <!-- Override the title block -->
+
+{% block content %}  <!-- Override the content block with specific content -->
+    <h1>Menu</h1>
+
+    <!-- Display menu items in an unordered list -->
+    <ul>
+        {% for item in menu_items %}  <!-- Loop over the menu items -->
+            <li>
+                {{ item.name }} - ${{ item.price }}  <!-- Display the name and price -->
+                <p>{{ item.description }}</p>  <!-- Display the description -->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

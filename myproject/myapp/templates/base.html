@@ -1,0 +1,35 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Little Lemon{% endblock %}</title>  <!-- Dynamic title block -->
+    {% load static %}  <!-- Load the static template tag library -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">  <!-- Link to CSS -->
+</head>
+<body>
+    <!-- Login Section -->
+    <div class="top-bar">
+        {% if user.is_authenticated %}  <!-- Check if user is logged in -->
+            Hello, {{ user.username }}!
+            <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}  <!-- Include CSRF token -->
+                <button type="submit">Logout</button>  <!-- Submit button to trigger POST -->
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>  <!-- Login button -->
+        {% endif %}
+    </div>
+
+    <!-- Main Content Block -->
+    <div class="content">
+        {% block content %}  <!-- Block to be overridden in child templates -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: rgb(222, 166, 146);">
+        <p>© 2024 Our Restaurant. All rights reserved.</p>
+    </footer>
+</body>
+</html>

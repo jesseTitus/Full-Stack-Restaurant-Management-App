@@ -55,9 +55,9 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
-        'OPTIONS': {
+        'OPTIONS': {    #can change to use jinja2
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -118,17 +118,31 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# import os
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Directory for project-level static files
+    # os.path.join(BASE_DIR, 'static'),  # Directory for project-level static files
+    'myapp/static',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files (for production)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files (for production)
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/'  # URL to redirect to for login
+LOGOUT_REDIRECT_URL = '/'  # URL to redirect to after logout
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yourmailprovider.com'  # SMTP server
+EMAIL_PORT = 587  # SMTP port
+EMAIL_USE_TLS = True  # Enable TLS
+EMAIL_HOST_USER = 'your-email@example.com'  # Your email
+EMAIL_HOST_PASSWORD = 'your-password'  # Your email password
+
+

@@ -1,0 +1,13 @@
+<!-- about_us.html -->
+{% extends 'base.html' %}  <!-- Extends from base.html -->
+
+{% block title %}About Us{% endblock %}  <!-- Override title block -->
+
+{% block content %}  <!-- Override the content block with specific content -->
+{% load static %}  <!-- Load the static template tag library -->
+
+    <h1>About Us</h1>
+    <img src="{% static 'images/about_us.jpg' %}" class="main-image" alt="About Us" />
+
+    <p>{{about}}</p>
+{% endblock %}

@@ -1,37 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to Our Restaurant</title>
-    {% load static %}  <!-- Ensure you load the static template tag library -->
+<!-- welcome.html -->
+{% extends 'base.html' %}  <!-- Extends from the base template -->
 
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">  <!-- Link to CSS -->
-</head>
-<body>
-    <div class="container">
-        <!-- Welcome Message -->
-        <h1>Welcome to Our Restaurant!</h1>  <!-- Centered welcome message -->
+{% block title %}Welcome to Our Restaurant{% endblock %}  <!-- Override the title block -->
 
-        <!-- Centered Row with 3 Images and Text -->
-        <div class="image-row">  <!-- Centered row of images -->
-            <div class="image-container">  <!-- Container for each image and text -->
-                <a href="{% url 'menu' %}">
-                <img src="{% static 'images/menu.jpg' %}" class="fixed-size-image" alt="View Menu" />  <!-- Image for menu -->
-                <p>View Menu</p>  <!-- Text below the image -->
-            </div>
+{% block content %}  <!-- Override the content block with specific content -->
+    <h1>Welcome to Our Restaurant!</h1>
+    {% load static %}  <!-- Load the static template tag library -->
 
-            <div class="image-container">  <!-- Container for each image and text -->
-                <a href="{% url 'book' %}">  <!-- Link to the 'book' page -->
-                <img src="{% static 'images/reservation.jpg' %}" class="fixed-size-image" alt="Make Reservation" />  <!-- Image for reservation -->
-                <p>Make Reservation</p>  <!-- Text below the image -->
-            </div>
+    <!-- Centered Row with 3 Images and Text -->
+    <div class="image-row">  <!-- Centered row of images -->
+        <div class="image-container">
+            <a href="{% url 'menu' %}">  <!-- Link to the 'menu' page -->
+            <img src="{% static 'images/menu.jpg' %}" class="fixed-size-image" alt="View Menu" />
+            <p>View Menu</p>
+        </div>
 
-            <div class="image-container">  <!-- Container for each image and text -->
-                <a href="{% url 'about' %}">  <!-- Link to the 'about' page -->
-                <img src="{% static 'images/about_us.jpg' %}" class="fixed-size-image" alt="About Us" />  <!-- Image for about us -->
-                <p>About Us</p>  <!-- Text below the image -->
-            </div>
+        <div class="image-container">  <!-- Link to the 'book' page -->
+            <a href="{% url 'book' %}">
+            <img src="{% static 'images/reservation.jpg' %}" class="fixed-size-image" alt="Make Reservation" />
+            <p>Make Reservation</p>
+        </div>
+
+        <div class="image-container">
+            <a href="{% url 'about' %}">  <!-- Link to the 'about' page -->
+            <img src="{% static 'images/about_us.jpg' %}" class="fixed-size-image" alt="About Us" />
+            <p>About Us</p>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}  <!-- End of the content block -->

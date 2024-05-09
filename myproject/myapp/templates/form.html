@@ -1,10 +1,12 @@
-<html>
-<body>
+{% extends 'base.html' %}  <!-- Extends from the base template -->
+
+{% block title %}Welcome to Our Restaurant{% endblock %}  <!-- Override the title block -->
+
+{% block content %}  <!-- Override the content block with specific content -->
     <p>hello</p>
     <form action="{% url 'modelform' %}" method="POST" style="background-color: aqua;">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Submit</button>
     </form>
-</body>
-<html>
+{% endblock %}  <!-- End of the content block -->

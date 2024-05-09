@@ -1,0 +1,46 @@
+.image-container {
+    text-align: center;  
+}
+
+.main-image {
+    width:60%;
+    height:auto;
+    align-self: center;
+}
+
+.fixed-size-image {
+    width: 150px;  
+    height: 150px;  
+    object-fit: cover;  
+    transition: transform 0.3s;  
+}
+
+.image-container a {
+    text-decoration: none;  
+}
+
+.fixed-size-image:hover {
+    transform: scale(1.1); 
+}
+
+/* Styles for the Header */
+header {
+    color:blue;
+    background-color: #f8f9fa;  /* Light gray background color */
+    padding: 10px;  /* Padding for spacing */
+    text-align: center;  /* Center-align content */
+}
+
+/* Styles for the Footer */
+footer {
+    background-color: #343a40;  /* Dark gray background color */
+    color: rgb(67, 34, 34);  /* White text color for contrast */
+    padding: 20px;  /* Padding for spacing */
+    text-align: center;  /* Center-align content */
+}
+
+/* Additional styling for elements in the header and footer */
+.top-bar {
+    display: flex;  /* Flex layout for alignment */
+    justify-content: flex-end;  /* Align elements to the right */
+}

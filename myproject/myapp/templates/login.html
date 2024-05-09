@@ -1,0 +1,20 @@
+<!-- menu.html -->
+{% extends 'base.html' %}  <!-- Extend from base template -->
+
+{% block title %}Login{% endblock %}  <!-- Override the title block -->
+
+{% block content %}  <!-- Override the content block with specific content -->
+<h1>Login to Your Account</h1>
+
+<!-- Login Form -->
+<form method="POST">  <!-- Use POST for form submission -->
+    {% csrf_token %}  <!-- CSRF token for security -->
+    {{ form.as_p }}  <!-- Renders form fields (username, password) -->
+    <button type="submit">Login</button>  <!-- Submit button for login -->
+</form>
+
+<!-- Optional: Links for registration or password reset -->
+<a href="{% url 'register' %}">Register</a>  <!-- Link to a registration page -->
+<a href="{% url 'password_reset' %}">Forgot Password?</a>  <!-- Link to a password reset page -->
+
+{% endblock %}

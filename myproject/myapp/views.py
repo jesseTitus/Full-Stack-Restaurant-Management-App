@@ -1,21 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from .models import Booking
+from .models import Booking, Menu
 import json
-from .forms import ApplicationForm, ModelForm
+from .forms import ApplicationForm, ModelForm, RegistrationForm
+from django.contrib.auth import login
 from myapp.models import Logger
 
 # (FUNCTION-BASED)
 def home(request):
-    # form = ApplicationForm() 
-        return render(request, 'welcome.html')#, {'form': form}) 
+    mydict = {}#used for any dynamic variables needed in template
+    return render(request, 'welcome.html', mydict)
 
 def about(request):
-    return HttpResponse("About us")
+    about_content = {'about':"Based in Chicago, Illionois, Little Lemon is a restaurant that serves Italian, Greek and Mexican food."}
+    return render(request, 'about_us.html', about_content)
 
 def menu(request):
-    return HttpResponse("Menu for Little Lemon")
+    menu_items = Menu.objects.all()
+    context = {
+        'menu_items': menu_items,
+    }
+    return render(request, 'menu.html', context)
 
 # def book(request):
     # if request.method == 'GET':
@@ -86,3 +92,17 @@ def modelform(request):
         form = ModelForm()
         context = {"form": form}
         return render(request, "form.html", context)
+    
+
+#-------------ACCOUNT RELATED VIEWS------------
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log in the user after registration
+            return redirect('home')  # Redirect to the home page or another page
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'register.html', {'form': form})  # Render the registration form

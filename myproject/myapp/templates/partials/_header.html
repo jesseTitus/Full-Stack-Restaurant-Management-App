@@ -1,0 +1,10 @@
+{% load static %}  <!-- Load the static template tag library -->
+<footer style="background-color: aliceblue;">
+<nav>
+    <img src="{% static 'images/logo.png' %}" style="width:5%;height:auto;" />
+    <a href="{% url 'home' %}" style="display: inline-block; width:120px;">Home</a>
+    <a href="{% url 'about' %}" style="display: inline-block; width:120px;">About</a>
+    <a href="{% url 'menu' %}" style="display: inline-block; width:120px;">Menu</a>
+    <a href="{% url 'book' %}" style="display: inline-block; width:120px;">Book</a>
+</nav>
+</footer>

@@ -33,7 +33,6 @@ class Menu(models.Model):
     name = models.CharField(max_length=200)
     price = models.IntegerField(default=10)
     category_id = models.ForeignKey(MenuCategory, on_delete=models.PROTECT, default=None, related_name="category_name")
-
     def __str__(self):
         return f"{self.name} : {self.category_id}"
         
@@ -41,6 +40,7 @@ class Logger(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     time_log = models.TimeField(help_text="dd/mm/yyyy")
+
     def __str__(self):
         return f"{self.first_name} {self.last_name} -- {self.time_log}"
     

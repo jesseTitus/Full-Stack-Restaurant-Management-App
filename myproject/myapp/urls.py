@@ -2,9 +2,11 @@ from django.urls import path, include, re_path, reverse_lazy
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
         path('', views.home, name="home"),
+        path('menu_item/<int:pk>/', views.display_menu_item, name="menu_item"),
         path('menu/', views.menu, name="menu"),
         path('about/', views.about, name="about"),
         path('book/', views.Book.as_view(), name="book"),
@@ -19,4 +21,5 @@ urlpatterns = [
         path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
         path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
         path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
-] 
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Serve media files

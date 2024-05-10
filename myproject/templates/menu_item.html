@@ -8,25 +8,27 @@
       <div class="row">
          <!--Begin col-->
          <div class="column">
-            <h2>
-                {{ menu_item.name }}
-            </h2>
-            <p>
-                {{ menu_item.menu_item_description }}
-            </p>
-            <p>
-                Price: ${{ menu_item.price }}.00
-            </p>
+            <h2>{{ menu_item.name }}</h2>
+            <p>{{ menu_item.menu_item_description }}</p>
+            <p>Price: ${{ menu_item.price }}.00</p>
+            <p>{{ menu_item.description }}</p>  <!-- Display the description -->
+
          </div>
          <!--End col-->
          <!--Begin col-->
          <div class="column">
-            
-            <img src="{% static  'images/menu_items/{{menu_item.name}}.jpg' %}" class="fixed-size-image" alt="{{ menu_item.name}}" />
-        </div>
+            {% with 'images/menu_items/'|add:menu_item.name|add:'.png' as image_path %}
+               <img src="{% static image_path %}" class="fixed-size-image" alt="{{ item.name }}" />
+            {% endwith %}
+         </div>
          <!--End col-->
       </div>
       <!--End row-->
+
+       <!-- Button to go back to 'menu' -->
+       <div class="back-button">
+         <a href="{% url 'menu' %}" class="button">Back to Menu</a> <!-- Styled link as a button -->
+      </div>
    </article>
 </section>
 {% endblock %}

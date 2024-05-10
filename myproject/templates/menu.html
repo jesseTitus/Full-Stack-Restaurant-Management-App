@@ -1,20 +1,27 @@
 <!-- menu.html -->
 {% extends 'base.html' %}  <!-- Extend from base template -->
-
+{% load static %}
 {% block title %}Menu{% endblock %}  <!-- Override the title block -->
 
 {% block content %}  <!-- Override the content block with specific content -->
     <h1>Menu</h1>
-
-    <!-- Display menu items in an unordered list -->
-    {% if menu_items %}
-        {% for item in menu_items %}  <!-- Loop over the menu items -->
-            <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width:100px; height:auto;">  <!-- Set image size -->
-
-            {{ item.name }} - ${{ item.price }}  <!-- Display the name and price -->
-            <p>{{ item.description }}</p>  <!-- Display the description -->
-        {% endfor %}
-    {%else%}
-    No Menu to Display
-    {%endif%}
+    
+        <!-- Display menu items in an unordered list -->
+        <div class="menu-grid">  <!-- Grid container for the menu -->
+        {% if menu_items %}
+            {% for item in menu_items %}  <!-- Loop over the menu items -->
+                <div class="menu-item">
+                    {% with 'images/menu_items/'|add:item.name|add:'.png' as image_path %}
+                        <a href="{% url 'menu_item' item.pk %}">  <!-- Link to the 'menu' page -->
+                            <img src="{% static image_path %}" class="fixed-size-image" alt="{{ item.name }}" />
+                        </a>
+                    {% endwith %}
+                    <h2>{{ item.name }} - ${{ item.price }}</h2>  <!-- Display the name and price -->
+                    <p>{{ item.description }}</p>  <!-- Display the description -->
+                </div>
+            {% endfor %}
+        {%else%}
+            <p>No Menu Items to Display</p>
+        {%endif%}
+        </div>
 {% endblock %}

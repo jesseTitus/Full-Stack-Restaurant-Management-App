@@ -1,12 +1,43 @@
-<!-- about_us.html -->
-{% extends 'base.html' %}  <!-- Extends from base.html -->
+{% extends 'base.html' %}  <!-- Extend from base template -->
 {% load static %}
-{% block title %}About Us{% endblock %}  <!-- Override title block -->
 
 {% block content %}  <!-- Override the content block with specific content -->
+    <section class="about-us">
+        <!-- Headline -->
+        <h1 class="our-story-title">Our Story</h1>  <!-- Orange headline with large font -->
 
-    <h1>About Us</h1>
-    <img src="{% static 'images/about_us.jpg' %}" class="main-image" alt="About Us" />
+        <!-- Blurb -->
+        <p class="blurb">
+            Little Lemon is a classic "old school" family diner located in London, Ontario. We offer quality food for the whole family at reasonable prices. At Little Lemon, we treat our customers like family and make you feel at home. Our diner has been serving the community for over 65 years and continues to be a staple for locals and tourists alike. Our team is dedicated to providing the best dining experience possible, which is why we use only the freshest ingredients. Come and join us for breakfast, lunch, or dinner, and experience the Little Lemon difference.
+        </p>
 
-    <p>{{about}}</p>
+        <!-- Images -->
+        <div class="image-gallery">
+            <img src="{% static 'images/diner1.png' %}" alt="Diner Image 1" class="story-image" />
+            <img src="{% static 'images/diner2.png' %}" alt="Diner Image 2" class="story-image" />
+            <img src="{% static 'images/diner3.png' %}" alt="Diner Image 3" class="story-image" />
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <h2>Testimonials</h2>
+            <blockquote>
+                <p><em>"Little Lemon is my favorite place to eat in London. The food is amazing, and the staff is friendly!"</em></p>
+                <p class="testimonial-name">- Alice Johnson</p>
+            </blockquote>
+            <blockquote>
+                <p><em>"I've been coming here for years, and it never disappoints. The food and atmosphere are fantastic!"</em></p>
+                <p class="testimonial-name">- Jacob Till</p>
+            </blockquote>
+            <blockquote>
+                <p><em>"Great food, great people, and a great atmosphere. Little Lemon is a London staple!"</em></p>
+                <p class="testimonial-name">- Sarah Lee</p>
+            </blockquote>
+        </div>
+
+        <!-- Banner -->
+        <div class="footer-banner">
+            <p>Visit us today for an unforgettable dining experience!</p>
+        </div>
+    </section>
 {% endblock %}

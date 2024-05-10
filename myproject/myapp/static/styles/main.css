@@ -8,6 +8,12 @@
     align-self: center;
 }
 
+.menu-image {
+    width:150px;
+    height:150px;
+    object-fit: cover;
+}
+
 .fixed-size-image {
     width: 150px;  
     height: 150px;  
@@ -43,4 +49,87 @@ footer {
 .top-bar {
     display: flex;  /* Flex layout for alignment */
     justify-content: flex-end;  /* Align elements to the right */
+}
+
+.button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block to ensure it behaves like a button */
+    border-radius: 5px; /* Rounded corners */
+ }
+ 
+ .content {
+    text-align: center; /* Center text */
+    padding: 20px; /* Optional padding */
+    background-color: white; /* Optional background color */
+    border-radius: 10px; /* Optional rounded corners */
+ }
+
+ .menu-grid {
+    display: grid;  /* Enable grid layout */
+    grid-template-columns: repeat(3, 1fr);  /* 3 columns with equal width */
+    gap: 20px;  /* Space between grid items */
+    justify-items: center;  /* Center items horizontally */
+}
+
+.menu-item {
+    text-align: center;  /* Center text within the grid item */
+    background-color: #f5f5f5;  /* Optional background color */
+    padding: 15px;  /* Padding for the grid item */
+    border: 1px solid #ddd;  /* Optional border */
+    border-radius: 10px;  /* Optional rounded corners */
+}
+
+/*about us stuff*/
+.our-story-title {
+    color: orange;  /* Orange font color */
+    font-size: 36px;  /* Large font size */
+    text-align: center;  /* Centered */
+    margin-bottom: 20px;  /* Spacing below the headline */
+}
+
+.blurb {
+    text-align: center;  /* Center the text */
+    font-size: 18px;  /* Readable font size */
+    line-height: 1.5;  /* Line spacing for readability */
+    margin-bottom: 30px;  /* Space below the blurb */
+}
+
+.image-gallery {
+    display: flex;  /* Flex layout for images */
+    justify-content: center;  /* Center images */
+    gap: 20px;  /* Space between images */
+}
+
+.story-image {
+    width: 200px;  /* Adjust width as needed */
+    height: 150px;  /* Adjust height as needed */
+    object-fit: cover;  /* Maintain aspect ratio */
+}
+
+.testimonials {
+    text-align: center;  /* Centered text */
+    margin-top: 20px;  /* Space above testimonials */
+}
+
+blockquote {
+    font-style: italic;  /* Italic font for quotes */
+    font-size: 16px;  /* Smaller font size for testimonials */
+    margin: 10px auto;  /* Center and space testimonials */
+    width: 60%;  /* Constrain width for better appearance */
+}
+
+.testimonial-name {
+    font-weight: bold;  /* Bold for testimonial names */
+    font-style: normal;  /* Normal font style for names */
+}
+
+.footer-banner {
+    background-color: #f5f5f5;  /* Light background for the banner */
+    text-align: center;  /* Centered text */
+    padding: 20px;  /* Padding */
+    border-top: 2px solid #ddd;  /* Top border for separation */
 }

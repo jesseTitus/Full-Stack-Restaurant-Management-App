@@ -21,6 +21,12 @@
 
         {% endblock %}
     </div>
+    <!-- Conditional Home Button (only shows if not on home page) -->
+    {% if request.path != '/' %}
+    <div class="home-button">
+        <a href="/" class="button">Home</a>  <!-- Redirects to the home page -->
+    </div>
+    {% endif %}
 
     {%include 'partials/_footer.html' %}
 </body>

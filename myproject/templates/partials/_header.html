@@ -1,10 +1,16 @@
 {% load static %}  <!-- Load the static template tag library -->
-<footer style="background-color: aliceblue;">
-<nav>
-    <img src="{% static 'images/logo.png' %}" style="width:5%;height:auto;" />
-    <a href="{% url 'home' %}" style="display: inline-block; width:120px;">Home</a>
-    <a href="{% url 'about' %}" style="display: inline-block; width:120px;">About</a>
-    <a href="{% url 'menu' %}" style="display: inline-block; width:120px;">Menu</a>
-    <a href="{% url 'book' %}" style="display: inline-block; width:120px;">Book</a>
-</nav>
-</footer>
+<header class="header-container">
+    <div class="header-content">
+        <!-- Logo and Welcome Text -->
+        <div class="logo-and-text">
+            <img src="{% static 'images/logo.png' %}" style="width:10%; height:auto;" alt="Logo" />
+            <span class="welcome-text">Welcome to Little Lemon's Family Restaurant</span>
+        </div>
+        <nav style="margin-top: 3%;">
+            <a href="{% url 'home' %}" style="display: inline-block; width:120px;">Home</a>
+            <a href="{% url 'about' %}" style="display: inline-block; width:120px;">About</a>
+            <a href="{% url 'menu' %}" style="display: inline-block; width:120px;">Menu</a>
+            <a href="{% url 'book' %}" style="display: inline-block; width:120px;">Book</a>
+        </nav>
+    </div>
+</header>

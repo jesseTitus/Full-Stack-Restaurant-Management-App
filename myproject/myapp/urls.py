@@ -10,6 +10,7 @@ urlpatterns = [
         path('menu/', views.menu, name="menu"),
         path('about/', views.about, name="about"),
         path('book/', views.Book.as_view(), name="book"),
+        path('make_reservation/', views.Book.as_view(), name='make_reservation'),  # URL pattern for reservation submission
         path('form/', views.form, name="form"),
         path('modelform/', views.modelform, name="modelform"),
         path('login/', LoginView.as_view(template_name='login.html'), name='login'),  # Login page

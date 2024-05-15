@@ -6,6 +6,11 @@ import json
 from .forms import ApplicationForm, ModelForm, RegistrationForm
 from django.contrib.auth import login
 from myapp.models import Logger
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # (FUNCTION-BASED)
 def home(request):
@@ -16,6 +21,7 @@ def about(request):
     about_content = {'about':"Based in Chicago, Illionois, Little Lemon is a restaurant that serves Italian, Greek and Mexican food."}
     return render(request, 'about_us.html', about_content)
 
+@csrf_exempt
 def menu(request):
     menu_items = Menu.objects.all()
     context = {
@@ -30,47 +36,47 @@ def display_menu_item(request, pk=None):
         menu_item = "" 
     return render(request, 'menu_item.html', {"menu_item": menu_item}) 
 
-# def book(request):
-    # if request.method == 'GET':
-    #     return HttpResponse("Make a booking")
+def login_required_page(request):
+    return HttpResponse("Login to make a reservation")
 
 # (CLASS-BASED), can use mixins (multiple inheritence)
 #common mixins: crud + list (warning, cant use together)
 class Book(View):
     def get(self, request):
+        # Check if the user is authenticated
+        if not request.user.is_authenticated:
+            # If not authenticated, redirect to the login page or a custom page
+            return redirect(reverse('login'))
         # Retrieve booking data
-        bookings = Booking.objects.all()  # Get all bookings
-
-        # Convert booking data to JSON-friendly format
-        booking_data = [
-            {
-                'id': booking.id,
-                'name': booking.name,
-                'date': booking.date,
-                'time': booking.time,
-            }
-            for booking in bookings
-        ]
+        if request.user.is_staff:
+            bookings = Booking.objects.all()
+        else:
+            bookings = Booking.objects.filter(name=request.user)
 
         # Return booking data as JSON
-        return JsonResponse({'bookings': booking_data})
+        return render(request, 'reservations.html', {'bookings': bookings})
 
     def post(self, request):
-        # Assuming booking information is in JSON format
-        data = json.loads(request.body)
+        try:
+            # Assuming booking information is in JSON format
+            data = json.loads(request.body)
 
-        # Create a new booking
-        new_booking = Booking(
-            name=data['name'],
-            date=data['date'],
-            time=data['time'],
-        )
-        new_booking.save()
+            name = data.get('name')
+            date = data.get('date')
+            time = data.get('time')
 
-        return JsonResponse({
-            'message': 'Booking created successfully',
-            'booking_id': new_booking.id,
-        })
+            # Create a new booking instance
+            new_booking = Booking.objects.create(
+                user=request.user,
+                name=name,
+                date=date,
+                time=time
+            )        
+            return JsonResponse({'message': 'Booking created successfully', 'booking_id': new_booking.id})
+
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid Json data'})
+
     
 
 # FORMS -- 

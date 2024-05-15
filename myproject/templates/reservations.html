@@ -1,0 +1,28 @@
+{% extends 'base.html' %}  <!-- Extend from base.html -->
+
+{% block content %}  <!-- Override the content block with specific content -->
+    <h1>Make a Reservation</h1>
+
+    <!-- Reservation Form -->
+    <form action="{% url 'make_reservation' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Existing Bookings -->
+    <h2>Existing Bookings</h2>
+    <ul>
+        {% for booking in bookings %}
+            <li>{{ booking.name }} - {{ booking.date }} - {{ booking.time }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Logger
+from .models import Booking
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -12,8 +12,8 @@ class ApplicationForm(forms.Form):
 #MODEL-FORM (must register in admin)
 class ModelForm(forms.ModelForm):
     class Meta:
-        model = Logger
-        fields = '__all__'  #import all firls from logger for modelform
+        model = Booking
+        fields = '__all__'  #import all fields from model for modelform
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)

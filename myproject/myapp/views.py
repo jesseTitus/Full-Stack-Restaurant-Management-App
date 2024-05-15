@@ -5,10 +5,11 @@ from .models import Booking, Menu
 import json
 from .forms import ApplicationForm, ModelForm, RegistrationForm
 from django.contrib.auth import login
-from myapp.models import Logger
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
+from django.db import IntegrityError
 
 
 
@@ -53,29 +54,37 @@ class Book(View):
         else:
             bookings = Booking.objects.filter(name=request.user)
 
-        # Return booking data as JSON
-        return render(request, 'reservations.html', {'bookings': bookings})
+        #check formate parameter provided
+        format = request.GET.get('format')
+        if format == 'json':
+            return JsonResponse({'bookings': list(bookings.values())})
+        else:
+            # Return booking data as HTML
+            return render(request, 'reservations.html', {'bookings': bookings})
 
     def post(self, request):
+        # Assuming booking information is in JSON format
+        data = json.loads(request.body)
+
+        name = data.get('name')
+        date = data.get('date')
+        time = data.get('time')
+
+        # Create a new booking instance
+        new_booking = Booking.objects.create(
+            user=request.user,
+            name=name,
+            date=date,
+            time=time
+        )        
         try:
-            # Assuming booking information is in JSON format
-            data = json.loads(request.body)
+            new_booking.save()
+        except IntegrityError:
+            return JsonResponse({'error':'true','message':'required field missing'},status=400)
+        
+        return JsonResponse(model_to_dict(new_booking), status=201)
 
-            name = data.get('name')
-            date = data.get('date')
-            time = data.get('time')
-
-            # Create a new booking instance
-            new_booking = Booking.objects.create(
-                user=request.user,
-                name=name,
-                date=date,
-                time=time
-            )        
-            return JsonResponse({'message': 'Booking created successfully', 'booking_id': new_booking.id})
-
-        except json.JSONDecodeError as e:
-            return JsonResponse({'error': 'Invalid Json data'})
+        
 
     
 
@@ -119,3 +128,13 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})  # Render the registration form
+
+def display_even_nums(request):
+    response = ""
+    nums = [1,2,3,4,5,6,7,8]
+    for i in nums:
+        remainder = i % 2
+        if remainder == 0:
+            response += str(i) + "<br/>"
+
+    return HttpResponse(response)

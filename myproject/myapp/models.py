@@ -22,7 +22,10 @@ class Booking(models.Model):
         return f"Booking for {self.name} on {self.date} at {self.time}"
 
     class Meta:
-        ordering = ['date', 'time']  # Default ordering
+        ordering = ['date', 'time']      # Default ordering
+        indexes = [
+            models.Index(fields=['name']),#explicit index -- faster queries
+        ]
 
 class MenuCategory(models.Model):
     name = models.CharField(max_length=200)
@@ -36,14 +39,6 @@ class Menu(models.Model):
     description = models.CharField(max_length=200)
     def __str__(self):
         return f"{self.name} : {self.category_id}"
-        
-class Logger(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    time_log = models.TimeField(help_text="dd/mm/yyyy")
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name} -- {self.time_log}"
     
 class Person(models.Model): 
     last_name = models.TextField() 

@@ -10,6 +10,7 @@ urlpatterns = [
         path('menu/', views.menu, name="menu"),
         path('about/', views.about, name="about"),
         path('book/', views.Book.as_view(), name="book"),
+        path('book/<str:format>/', views.Book.as_view(), name="book"),
         path('make_reservation/', views.Book.as_view(), name='make_reservation'),  # URL pattern for reservation submission
         path('form/', views.form, name="form"),
         path('modelform/', views.modelform, name="modelform"),
@@ -22,5 +23,6 @@ urlpatterns = [
         path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
         path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
         path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+        path('numbers', views.display_even_nums),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Serve media files

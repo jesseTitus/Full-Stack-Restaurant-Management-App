@@ -31,8 +31,8 @@ def menu(request):
 
     search = request.GET.get('search')
     ordering = request.GET.get('ordering')
-    perpage = request.GET.get('perpage', default=10)
-    page = request.GET.get('page', default=1)
+    perpage = int(request.GET.get('perpage', 10))
+    page = int(request.GET.get('page', 1))
 
     if category_name:
         items = items.filter(category__name=category_name)  #filter menu items by category
@@ -53,8 +53,6 @@ def menu(request):
         items = paginator.page(number=page)
     except EmptyPage:
         items = []
-    for item in items:
-        print(item)
 
     context = {
         'menu_items': items,

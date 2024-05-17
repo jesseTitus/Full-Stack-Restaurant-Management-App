@@ -9,26 +9,24 @@
      <!-- Search form -->
     <form method="GET" action="{% url 'menu' %}">
         <!-- Text input field for search query -->
-        <input type="text" name="search" placeholder="Search menu items...">
+        <input type="text" name="search" placeholder="Search menu items..." value="{{ request.GET.search }}">
 
         <!-- Price range slider -->
         <label for="min_price">Min Price:</label>
-        <input type="range" id="min_price" name="min_price" min="0" max="20" value="{{ min_price }}">
-        <span id="min_price_label">{{ min_price }}</span>
-        <input type="hidden" id="min_price_hidden" name="min_price_hidden" value="{{ min_price }}">
+        <input type="range" id="min_price" name="min_price" min="0" max="20" value="{{ min_price|default_if_none:0 }}">
+        <span id="min_price_label">${{ min_price|default_if_none:0 }}</span>
 
         <label for="max_price">Max Price:</label>
-        <input type="range" id="max_price" name="max_price" min="0" max="20" value="{{ max_price }}">
-        <span id="max_price_label">${{ max_price }}</span>
-        <input type="hidden" id="max_price_hidden" name="max_price_hidden" value="{{ max_price }}">
+        <input type="range" id="max_price" name="max_price" min="0" max="20" value="{{ max_price|default_if_none:20 }}">
+        <span id="max_price_label">${{ max_price|default_if_none:20 }}</span>
 
 
         <!-- Order by select -->
         <label for="ordering">Order by:</label>
         <select id="ordering" name="ordering">
             <option value="">Select</option>
-            <option value="name">Name</option>
-            <option value="price">Price</option>
+            <option value="name" {% if request.GET.ordering == 'name' %}selected{% endif %}>Name</option>
+            <option value="price" {% if request.GET.ordering == 'price' %}selected{% endif %}>Price</option>
         </select>
 
         <!-- Items per page dropdown -->
@@ -82,18 +80,16 @@
             var maxPriceLabel = document.getElementById("max_price_label");
         
             // Update the labels below the sliders
-            minPriceLabel.innerHTML = minPriceSlider.value;
-            maxPriceLabel.innerHTML = maxPriceSlider.value;
+            minPriceLabel.innerHTML = "$" + minPriceSlider.value;
+            maxPriceLabel.innerHTML = "$" + maxPriceSlider.value;
         
             // Update the labels as the sliders are adjusted
             minPriceSlider.oninput = function() {
-                minPriceLabel.innerHTML = this.value;
-                document.getElementById("min_price_hidden").value = this.value; // Update hidden input value
+                minPriceLabel.innerHTML = "$" + this.value;
             }
         
             maxPriceSlider.oninput = function() {
-                maxPriceLabel.innerHTML = this.value;
-                document.getElementById("max_price_hidden").value = this.value; // Update hidden input value
+                maxPriceLabel.innerHTML = "$" + this.value;
             }
         </script>
 {% endblock %}

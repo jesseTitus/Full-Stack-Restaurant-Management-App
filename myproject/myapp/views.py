@@ -29,7 +29,7 @@ def menu(request):
         'menu_items': menu_items,
     }
     return render(request, 'menu.html', context)
-
+    
 def display_menu_item(request, pk=None): 
     if pk: 
         menu_item = Menu.objects.get(pk=pk) 
@@ -128,13 +128,3 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})  # Render the registration form
-
-def display_even_nums(request):
-    response = ""
-    nums = [1,2,3,4,5,6,7,8]
-    for i in nums:
-        remainder = i % 2
-        if remainder == 0:
-            response += str(i) + "<br/>"
-
-    return HttpResponse(response)

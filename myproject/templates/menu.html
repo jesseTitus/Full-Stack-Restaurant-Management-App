@@ -31,6 +31,14 @@
             <option value="price">Price</option>
         </select>
 
+        <!-- Items per page dropdown -->
+        <label for="perpage">Items per page:</label>
+        <select name="perpage" id="perpage">
+            {% for i in perpage_range %}
+                <option value="{{ i }}" {% if i == perpage %}selected{% endif %}>{{ i }}</option>
+            {% endfor %}
+        </select>
+
         <!-- Submit button -->
         <button type="submit">Search</button>
     </form>
@@ -53,6 +61,18 @@
         {%endif%}
         </div>
 
+        <!-- Pagination controls -->
+        <div class="pagination">
+            {% if menu_items.has_previous %}
+                <a href="?page={{ menu_items.previous_page_number }}&search={{ request.GET.search }}&min_price={{ min_price }}&max_price={{ max_price }}&perpage={{ perpage }}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ menu_items.number }} of {{ menu_items.paginator.num_pages }}</span>
+
+            {% if menu_items.has_next %}
+                <a href="?page={{ menu_items.next_page_number }}&search={{ request.GET.search }}&min_price={{ min_price }}&max_price={{ max_price }}&perpage={{ perpage }}">Next</a>
+            {% endif %}
+        </div>
 
         <!--js helper script to label sliders with values-->
         <script>

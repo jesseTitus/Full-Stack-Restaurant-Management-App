@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.db import IntegrityError
-
+from django.core.paginator import Paginator, EmptyPage
 
 
 # (FUNCTION-BASED)
@@ -26,12 +26,14 @@ def about(request):
 def menu(request):
     items = Menu.objects.select_related('category').all()
     category_name = request.GET.get('category')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
+    min_price = request.GET.get('min_price', 0)
+    max_price = request.GET.get('max_price', 20)
 
     search = request.GET.get('search')
     ordering = request.GET.get('ordering')
-    myscript = "slfkjslfkjslfk <script>alert('hello!!')</script>"
+    perpage = request.GET.get('perpage', default=10)
+    page = request.GET.get('page', default=1)
+
     if category_name:
         items = items.filter(category__name=category_name)  #filter menu items by category
     if max_price:
@@ -43,11 +45,23 @@ def menu(request):
     if ordering:
         ordering_fields = ordering.split(",")
         items = items.order_by(*ordering_fields)
+
+    
+    
+    paginator = Paginator(items, per_page=perpage)
+    try:
+        items = paginator.page(number=page)
+    except EmptyPage:
+        items = []
+    for item in items:
+        print(item)
+
     context = {
         'menu_items': items,
         'min_price':min_price,
         'max_price':max_price,
-        'myscript':myscript,
+        'perpage': perpage,
+        'perpage_range': range(1, 11),  # Range for the per page dropdown (1 to 10)
     }
     return render(request, 'menu.html', context)
     

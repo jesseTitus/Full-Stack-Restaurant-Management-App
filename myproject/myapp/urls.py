@@ -10,7 +10,7 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
         path('', views.home, name="home"),
         path('menu_item/<int:pk>', views.display_menu_item, name="menu_item"),
-        path('menu', views.menu, name="menu"),
+        re_path(r'^menu/?$', views.menu, name="menu"),
         path('api/menu-generic', views_api.MenuAPIViewGeneric.as_view()),
         path('api/menu-generic/<int:pk>', views_api.SingleMenuItemAPIViewGeneric.as_view()),
         path('api/book', views_api.book_view),

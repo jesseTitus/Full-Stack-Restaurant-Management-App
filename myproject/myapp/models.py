@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User  # Example for a foreign key reference
+from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
+
 
 class Booking(models.Model):
     # Unique ID (automatically created)
@@ -34,11 +37,17 @@ class MenuCategory(models.Model):
     
 class Menu(models.Model):
     name = models.CharField(max_length=200)
-    price = models.IntegerField(default=10)
+    price = models.IntegerField(default=10, validators=[MinValueValidator(2)])
     category = models.ForeignKey(MenuCategory, on_delete=models.PROTECT, default=None, related_name="category_name")
     description = models.CharField(max_length=200)
     def __str__(self):
         return f"{self.name} : {self.category}"
+    
+    def save(self, *args, **kwargs):
+        # Check if there is already an item with the same name
+        if Menu.objects.filter(name=self.name).exists():
+            raise ValidationError("A menu item with this name already exists.")
+        super().save(*args, **kwargs)
     
 class Person(models.Model): 
     last_name = models.TextField() 

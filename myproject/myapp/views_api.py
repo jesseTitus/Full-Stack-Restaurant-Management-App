@@ -9,8 +9,11 @@ from rest_framework import generics
 from .serializers import CategorySerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
+from .permissions import IsStaffOrReadOnly
+
 
 class MenuAPIViewGeneric(generics.ListCreateAPIView):
+     permission_classes = [IsStaffOrReadOnly]
      queryset = Menu.objects.all()
      serializer_class = MenuSerializer  #display and store records
 
@@ -21,6 +24,7 @@ class SingleMenuItemAPIViewGeneric(generics.RetrieveUpdateAPIView, generics.Dest
 
 @api_view()
 def category_detail(request, pk):
+    permission_classes = [IsStaffOrReadOnly]
     category = get_object_or_404(MenuCategory,pk=pk)
     serialized_category = CategorySerializer(category)
     return Response(serialized_category.data) 
@@ -28,6 +32,7 @@ def category_detail(request, pk):
 @api_view(['GET'])
 @renderer_classes([TemplateHTMLRenderer])
 def book_view(request):
+     permission_classes = [IsStaffOrReadOnly]
      bookings = Booking.objects.all()
      serialized_item = BookingSerializer(bookings, many=True)
     #  print("Bookings Queryset:", bookings)
@@ -36,6 +41,7 @@ def book_view(request):
 
 
 class MenuAPIView(viewsets.ViewSet):
+    permission_classes = [IsStaffOrReadOnly]
     def list(self, request):
             # Retrieve all menu items from the database
             menu_items = Menu.objects.select_related('category').all() #using category makes sql queries more efficient

@@ -24,9 +24,30 @@ def about(request):
 
 @csrf_exempt
 def menu(request):
-    menu_items = Menu.objects.all()
+    items = Menu.objects.select_related('category').all()
+    category_name = request.GET.get('category')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    search = request.GET.get('search')
+    ordering = request.GET.get('ordering')
+    myscript = "slfkjslfkjslfk <script>alert('hello!!')</script>"
+    if category_name:
+        items = items.filter(category__name=category_name)  #filter menu items by category
+    if max_price:
+        items = items.filter(price__lte=max_price)           #lte: <=
+    if min_price:
+        items = items.filter(price__gte=min_price)
+    if search:
+        items = items.filter(name__icontains=search)        #search
+    if ordering:
+        ordering_fields = ordering.split(",")
+        items = items.order_by(*ordering_fields)
     context = {
-        'menu_items': menu_items,
+        'menu_items': items,
+        'min_price':min_price,
+        'max_price':max_price,
+        'myscript':myscript,
     }
     return render(request, 'menu.html', context)
     

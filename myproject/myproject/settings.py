@@ -147,3 +147,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store media files
 INTERNAL_IPS = [    #for django_debug_toolbar support
     '127.0.0.1'
 ]
+
+REST_FRAMEWORK = {  #in insomnia, set accept header to Appect | application/xml or application/json
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_xml.renderers.XMLRenderer',
+    ]
+}

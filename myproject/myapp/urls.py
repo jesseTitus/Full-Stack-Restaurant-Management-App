@@ -13,6 +13,8 @@ urlpatterns = [
         path('menu', views.menu, name="menu"),
         path('api/menu-generic', views_api.MenuAPIViewGeneric.as_view()),
         path('api/menu-generic/<int:pk>', views_api.SingleMenuItemAPIViewGeneric.as_view()),
+        path('api/book', views_api.book_view),
+        path('category/<int:pk>',views_api.category_detail, name='category-detail'),
         # path('api/menu', views_api.MenuAPIView.as_view(
         #      {
         #          'get':'list',

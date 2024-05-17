@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings</title>
+</head>
+<body>
+    <table width="100%" style="text-align: left;">
+        <tr>
+            <th>Name</th> <!-- item column heading -->
+            <th>Date</th> <!-- price column heading -->
+            <th>Time</th> <!-- price after tax column heading -->
+            <th>Guests</th> <!-- stock column heading -->
+            <th>Created</th> <!-- stock column heading -->
+            <th>Updated</th> <!-- stock column heading -->
+        </tr>
+        {% for booking in data %}
+        <tr>
+            <td>{{ booking.name }}</td>
+            <td>{{ booking.date }}</td>
+            <td>{{ booking.time }}</td>
+            <td>{{ booking.guests }}</td>
+            <td>{{ booking.created_at }}</td>
+            <td>{{ booking.updated_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

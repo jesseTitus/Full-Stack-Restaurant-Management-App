@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'myapp.apps.MyappConfig',
     'rest_framework',
     'debug_toolbar',
+    'django_filters',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -153,5 +155,15 @@ REST_FRAMEWORK = {  #in insomnia, set accept header to Appect | application/xml 
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework_xml.renderers.XMLRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [                        #use ordering_fiels['field names'] in viewsets.ModelViewSet for view apis to include ordering/filtering
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 3,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }

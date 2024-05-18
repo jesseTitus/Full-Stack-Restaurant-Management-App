@@ -26,8 +26,8 @@ def about(request):
 def menu(request):
     items = Menu.objects.select_related('category').all()
     category_name = request.GET.get('category')
-    min_price = request.GET.get('min_price', 0)
-    max_price = request.GET.get('max_price', 20)
+    min_price = request.GET.get('min_price', 1)
+    max_price = request.GET.get('max_price', 50)
 
     search = request.GET.get('search')
     ordering = request.GET.get('ordering')

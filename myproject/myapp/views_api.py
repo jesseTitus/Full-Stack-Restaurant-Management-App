@@ -10,12 +10,16 @@ from .serializers import CategorySerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from .permissions import IsStaffOrReadOnly
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 
 
 class MenuAPIViewGeneric(generics.ListCreateAPIView):
      permission_classes = [IsStaffOrReadOnly]
      queryset = Menu.objects.all()
      serializer_class = MenuSerializer  #display and store records
+     ordering_fields = ['price', 'name']#menu-generic?ordering=name
+     filterset_fields = ['price']
 
 
 class SingleMenuItemAPIViewGeneric(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
@@ -30,10 +34,16 @@ def category_detail(request, pk):
     return Response(serialized_category.data) 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 @renderer_classes([TemplateHTMLRenderer])
 def book_view(request):
-     permission_classes = [IsStaffOrReadOnly]
-     bookings = Booking.objects.all()
+     ordering_fields = ['name', 'date', 'time', 'created_at', 'guests']
+     ordering = request.GET.get('ordering')
+     # If 'ordering' is present and is one of the allowed fields, order the queryset
+     if ordering in ordering_fields:
+        bookings = Booking.objects.all().order_by(ordering)
+     else:
+        bookings = Booking.objects.all()
      serialized_item = BookingSerializer(bookings, many=True)
     #  print("Bookings Queryset:", bookings)
     #  print("Serialized Data:", serialized_item.data)
@@ -60,3 +70,11 @@ class MenuAPIView(viewsets.ViewSet):
         return Response({"message":"Partially updating a menu item"}, status.HTTP_200_OK)
     def destroy(self, request, pk=None):
         return Response({"message":"Deleting a menu item"}, status.HTTP_200_OK)
+
+@api_view()
+@permission_classes([IsAuthenticated])
+def manager_view(request):
+    if request.user.groups.filter(name='Manager').exists():
+        return Response({"message":"Only Manager Should See This"})
+    else:
+        return Response({"message": "You are not authorized"}, 403)

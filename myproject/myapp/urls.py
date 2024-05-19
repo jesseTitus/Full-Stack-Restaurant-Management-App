@@ -47,6 +47,9 @@ urlpatterns = [
         path('__debug__/', include('debug_toolbar.urls')),
         path('api-token-auth', obtain_auth_token),
         path('api/manager-view', views_api.manager_view),
+        path('api/throttle-check', views_api.throttle_check),
+        path('api/throttle-check-auth', views_api.throttle_check_auth),
+        path('api/secret', views_api.secret),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Serve media files
 

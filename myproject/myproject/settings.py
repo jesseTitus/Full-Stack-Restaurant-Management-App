@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -43,6 +44,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_filters',
     'rest_framework.authtoken',
+    'djoser',#auth utility, (keep under rest_framework app)
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',#blacklist refresh tokens
 ]
 
 MIDDLEWARE = [
@@ -156,6 +160,11 @@ REST_FRAMEWORK = {  #in insomnia, set accept header to Appect | application/xml 
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework_xml.renderers.XMLRenderer',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SesionAuthentication',#allow use django admin simulatenously with djoser, can remove in prod
+    ),
     'DEFAULT_FILTER_BACKENDS': [                        #use ordering_fiels['field names'] in viewsets.ModelViewSet for view apis to include ordering/filtering
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
@@ -163,7 +172,21 @@ REST_FRAMEWORK = {  #in insomnia, set accept header to Appect | application/xml 
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 3,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon':'2/minute',
+        'user':'5/minute',
+        'ten':'10/minute',
+    },
+
+}
+
+DJOSER = {
+    "USER_ID_FIELD":"username"  #field that acts as primary key
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=5),
 }

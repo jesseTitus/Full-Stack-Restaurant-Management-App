@@ -16,10 +16,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenObtainPairView.as_view(), name='token_refresh'),
+    path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
 ]
+
+#browsable djoser auth api endpoints (select extra actions to perform these operations in browser):
+# /users/
+# /users/me/
+# /users/confirm/
+# /users/resend_activation/
+# /users/set_password/
+# /users/reset_password/
+# /users/reset_password_confirm/
+# /users/set_username/
+# /users/reset_username/
+# /users/reset_username_confirm/
+# /token/login/
+# /token/logout
+# http://127.0.0.1:8000/auth
+
+#jwt: 
+#access:authenticate api calls (expires, use refresh token to regen)
+#refresh: regenerate access token
 
 handler404 = 'myproject.views.handler404'

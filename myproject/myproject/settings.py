@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'djoser',#auth utility, (keep under rest_framework app)
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',#blacklist refresh tokens
+    #'rest_framework_simplejwt',
+    #'rest_framework_simplejwt.token_blacklist',#blacklist refresh tokens
 ]
 
 MIDDLEWARE = [
@@ -161,7 +161,7 @@ REST_FRAMEWORK = {  #in insomnia, set accept header to Appect | application/xml 
         'rest_framework_xml.renderers.XMLRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SesionAuthentication',#allow use django admin simulatenously with djoser, can remove in prod
     ),
@@ -187,6 +187,6 @@ DJOSER = {
     "USER_ID_FIELD":"username"  #field that acts as primary key
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=5),
-}
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME':timedelta(minutes=5),
+# }

@@ -50,6 +50,8 @@ urlpatterns = [
         path('api/throttle-check', views_api.throttle_check),
         path('api/throttle-check-auth', views_api.throttle_check_auth),
         path('api/secret', views_api.secret),
+        path('api/groups/manager/users', views_api.managers),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Serve media files
 

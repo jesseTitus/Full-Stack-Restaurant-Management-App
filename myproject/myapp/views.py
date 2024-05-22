@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from .models import Booking, Menu
+from .models import Booking, Menu, UserComments
 import json
-from .forms import ApplicationForm, ModelForm, RegistrationForm
+from .forms import ApplicationForm, ModelForm, RegistrationForm, CommentForm
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -11,7 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.db import IntegrityError
 from django.core.paginator import Paginator, EmptyPage
-
 
 # (FUNCTION-BASED)
 def home(request):
@@ -161,3 +160,20 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})  # Render the registration form
+
+def comment_form_view(request):
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            uc = UserComments(              #assign values to model received from POST
+                first_name = cd['first_name'],
+                last_name = cd['last_name'],
+                comment = cd['comment'],
+            )
+            uc.save() #update model data
+            return JsonResponse({
+                'message': 'success'
+            })
+    return render(request, 'blog.html', {'form': form})

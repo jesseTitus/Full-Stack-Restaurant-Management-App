@@ -1,0 +1,51 @@
+{% extends 'base.html' %}  <!-- Extend from base template -->
+{% load static %}
+
+{% block content %}  <!-- Override the content block with specific content -->
+    <section class="blog">
+        <!-- Headline -->
+        <h1 class="blog-title">5/21/2024</h1>  <!-- Orange headline with large font -->
+
+        <div class="blog-post">
+            <blockquote>
+                <p><em>"Only the freshest ingredients"</em></p>
+            </blockquote>
+            <p >
+                At Little Lemon, we believe that the key to extraordinary dining lies in the ingredients we use. That's why we're committed to sourcing the freshest, highest quality produce, meats, and dairy products from local farmers and suppliers.
+
+                    Every morning, our chefs select the finest ingredients, ensuring that every dish is not only delicious but also bursting with freshness. Our vegetables are hand-picked from nearby farms, guaranteeing vibrant colors and robust flavors. We choose free-range meats and sustainable seafood, ensuring not only a delectable taste but also ethical sourcing.
+                    
+                    Our commitment to fresh ingredients means that our menu changes with the seasons, bringing you the best of what each time of year has to offer. Whether it's summer heirloom tomatoes, crisp fall apples, or winter root vegetables, you can taste the difference that fresh, locally-sourced ingredients make.
+                    
+                    Come experience the freshness at Little Lemon, where every bite is a testament to our passion for quality and our dedication to our local community. Your taste buds will thank you!</p>
+                </p>
+        </div>
+    </section>
+    <div class="container pt-4">
+        <section class="user-comments">
+            <h1>User comments</h1>
+            <form method="POST" id="form">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        const form = document.getElementById('form');
+        form.addEventListener("submit", submitHandler);
+
+        function submitHandler(e) {
+            e.preventDefault();
+            fetch(form.action, {method: 'POST', body: new FormData(form)})
+            .then(response=>response.json())
+            .then(data=> {
+                if (data.message === 'success') {
+                    alert('Success!');
+                    form.reset();
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -2,6 +2,7 @@ from django import forms
 from .models import Booking
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import UserComments
 
 class ApplicationForm(forms.Form): 
     name = forms.CharField(label='Name of Applicant', max_length=50) 
@@ -21,3 +22,8 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = UserComments
+        fields = '__all__'

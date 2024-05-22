@@ -65,3 +65,9 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.first_name
+    
+#fetching data using js
+class UserComments(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    comment = models.CharField(max_length=1000)

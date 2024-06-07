@@ -1,10 +1,10 @@
-# DineEase: Full-Stack Restaurant Management App
+Full-Stack Restaurant Management App
 
-![DineEase Logo](path_to_logo_image)
+
 
 ## Overview
 
-DineEase is a comprehensive restaurant management application designed to streamline operations for restaurants. 
+Comprehensive restaurant management application designed to streamline operations for restaurants. 
 This full-stack application includes a robust backend API built with Django and a dynamic frontend using HTML, CSS, and JavaScript. 
 The app covers various functionalities essential for restaurant management, such as menu management, order processing, and customer feedback.
 

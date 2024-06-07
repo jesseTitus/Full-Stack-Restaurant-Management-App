@@ -30,7 +30,3 @@ The app covers various functionalities essential for restaurant management, such
 - Django 3.2+
 - Node.js 14+
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/DineEase.git
-   cd DineEase

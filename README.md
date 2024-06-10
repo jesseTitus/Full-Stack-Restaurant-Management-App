@@ -29,4 +29,4 @@ The app covers various functionalities essential for restaurant management, such
 - Python 3.8+
 - Django 3.2+
 - Node.js 14+
-
+..

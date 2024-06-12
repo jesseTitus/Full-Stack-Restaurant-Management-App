@@ -5,8 +5,20 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED 1
 
 # Install dependencies
+
 RUN apt-get update \
-    && apt-get install -y postgresql-client libjpeg-dev gcc libc-dev postgresql-server-dev-all musl-dev zlib1g zlib1g-dev pkg-config libmariadb-dev \
+    && apt-get install -y \
+    postgresql-client \
+    libjpeg-dev \
+    gcc \
+    libc-dev \
+    postgresql-server-dev-all \
+    musl-dev \
+    zlib1g zlib1g-dev \
+    pkg-config \
+    libmariadb-dev \
+    libpq-dev \
+    python3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

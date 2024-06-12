@@ -1,19 +1,24 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
+# Set environment variables
 ENV PYTHONUNBUFFERED 1
-COPY ./requirements.txt /requirements.txt
 
-RUN apt-get add --update --no-cache postgresql-client jpeg-dev
-RUN apt-get add --update --no-cache --virtual .tmp-build-deps \ 
-    gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
+# Install dependencies
+RUN apt-get update \
+    && apt-get install -y postgresql-client libjpeg-dev gcc libc-dev postgresql-server-dev-all musl-dev zlib1g zlib1g-dev pkg-config libmariadb-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY requirements.txt /requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r /requirements.txt
-RUN apt-get del .tmp-build-deps
 
+# Set up the application directory
 RUN mkdir /app
-# COPY ./app /app
 COPY myproject /app/
 WORKDIR /app
 
 
-CMD [ "python", "manage.py", "runserver" ]
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]

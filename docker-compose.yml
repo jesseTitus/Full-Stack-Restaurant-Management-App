@@ -3,24 +3,27 @@ services:
   app:
     build:
       context: .
+      dockerfile: dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app
+      - ./myproject:/app
     command: >
       sh -c "python3 manage.py migrate &&
              python3 manage.py wait_for_db &&
              python3 manage.py runserver 0.0.0.0:8000"
 
     env_file:
-      - ./.env #./.env.dev
+      - ./.env 
     depends_on:
       - db
 
   db:
     image: postgres:10-alpine
+    environment:
+      - POSTGRES_PASSWORD=yourpassword
     env_file:
-      - ./.env #./.env.dev
+      - ./.env 
     volumes: 
       - pgdata:/var/lib/postgresql/data
   redis:
@@ -29,11 +32,12 @@ services:
     restart: always
     build:
       context: .
-    command: celery -A app worker -l info
+      dockerfile: dockerfile
+    command: celery -A myproject worker -l info
     volumes:
-      - ./app:/app
+      - ./myproject:/app
     env_file:
-      - ./.env #./.env.dev
+      - ./.env 
     depends_on:
       - db
       - redis

@@ -98,16 +98,15 @@ if DEVELOPMENT_MODE:
         }
     }
 else:
-    DATABASES = {   
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('MYSQL_NAME'),
-            'HOST': os.getenv('MYSQL_HOST'),
-            'PORT': os.getenv('MYSQL_PORT'),
-            'USER': os.getenv('MYSQL_USER'),
-            'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-        }
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
     }
+}
 
 
 # Password validation
@@ -208,3 +207,7 @@ DJOSER = {
 # SIMPLE_JWT = {
 #     'ACCESS_TOKEN_LIFETIME':timedelta(minutes=5),
 # }
+
+# Redis and Celery Conf
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"

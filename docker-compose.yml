@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./myproject:/app
+      - ./myproject:/myproject
     command: >
       sh -c "python3 manage.py migrate &&
              python3 manage.py wait_for_db &&
@@ -35,7 +35,7 @@ services:
       dockerfile: dockerfile
     command: celery -A myproject worker -l info
     volumes:
-      - ./myproject:/app
+      - ./myproject:/myproject
     env_file:
       - ./.env 
     depends_on:

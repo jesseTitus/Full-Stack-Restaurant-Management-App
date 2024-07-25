@@ -27,6 +27,9 @@ COPY requirements.txt /requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r /requirements.txt
 
+# Install Celery manually
+# RUN python -m pip install --upgrade --no-cache-dir --use-deprecated=legacy-resolver celery==4.4.1
+
 # Set up the application directory
 RUN mkdir /app
 COPY myproject /app/

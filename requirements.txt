@@ -30,7 +30,7 @@ tzdata==2024.1
 urllib3==2.2.1
 webencodings==0.5.1
 
-celery==4.4.1
+celery
 redis==3.4.1
 psycopg2==2.9.6
 importlib-metadata==4.13.0
